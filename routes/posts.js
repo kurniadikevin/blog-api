@@ -5,9 +5,19 @@ const Post = require("../models/post");
 
 
 //read posts
-router.get('/', function(req, res, next) {
- res.send('render posts')
+router.get('/', (req, res,next) => {
+  Post.find({}, "")
+  .sort({ date: -1 })
+  //.populate("user")
+  .exec(function (err, list_posts) {
+    if (err) {
+      return next(err);
+    }
+    //Successful, so render
+    res.json(list_posts);
+  });
 });
+
 
 //create new post get
 router.get('/new', (req, res,next) => {
