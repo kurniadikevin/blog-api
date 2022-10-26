@@ -14,7 +14,7 @@ router.get('/', (req, res,next) => {
       return next(err);
     }
     //Successful, so render
-    res.json(list_posts);
+    res.send(list_posts);
   });
 });
 
@@ -43,7 +43,15 @@ router.post('/new', (req,res,next)=>{
 
 //read post detail get
 router.get('/:postId', function(req, res, next) {
-  return res.send('read post'+ req.params.postId);
+  Post.find({_id: req.params.postId}, "")
+  //.populate("user")
+  .exec(function (err, list_posts) {
+    if (err) {
+      return next(err);
+    }
+    //Successful, so render
+    res.send(list_posts);
+  });
 });
 
 
