@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  form(method="POST" action='')
+      
+        div.form-group
+            label(for='text') Main
+            textarea#textInput(rows='10' cols='30',placeholder='main message text', name='text',required='true')
+        div.button-cont
+            button.btn#submit-post(type='submit') Post

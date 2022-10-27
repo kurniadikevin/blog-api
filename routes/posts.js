@@ -4,11 +4,12 @@ var router = express.Router();
 const Post = require("../models/post");
 
 
+
 //read posts
 router.get('/', (req, res,next) => {
   Post.find({}, "")
   .sort({ date: -1 })
-  //.populate("user")
+  .populate("comment")
   .exec(function (err, list_posts) {
     if (err) {
       return next(err);
@@ -44,7 +45,8 @@ router.post('/new', (req,res,next)=>{
 //read post detail get
 router.get('/:postId', function(req, res, next) {
   Post.find({_id: req.params.postId}, "")
-  //.populate("user")
+  .populate("comment")
+  
   .exec(function (err, list_posts) {
     if (err) {
       return next(err);

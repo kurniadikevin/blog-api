@@ -1,12 +1,43 @@
 var express = require('express');
 var router = express.Router();
 //import { v4 as uuidv4 } from 'uuid';
+const Comment = require("../models/comment");
+const Post = require("../models/post");
 
 
 //read comment all
-router.get('/', function(req, res, next) {
- res.send('render comment')
+router.get('/:postId/comment', function(req, res, next) {
+  Comment.find({postId: req.params.postId}, "")
+  .sort({ date: 1 })
+  //.populate("comment")
+  .exec(function (err, result) {
+    if (err) {
+      return next(err);
+    }
+    //Successful, so render
+    res.send(result);
+  });
 });
+
+//create form sample comment GET
+router.get('/:postId/comment/form', function(req, res, next) {
+  res.render('comment-form',{title: 'Comment form for sample'})
+ });
+
+ //create form sample comment POST
+router.post('/:postId/comment/form', function(req, res, next) {
+  const comments = new Comment({
+    postId : req.params.postId,
+   text_comment : req.body.text, 
+ })
+ comments.save(err => {
+   if (err) { 
+     return next(err);
+   }
+   res.redirect("/");
+ });
+})
+
 
 //create comment get
 router.get('/newComment', (req, res,next) => {

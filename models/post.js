@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Comment = require("../models/comment");
 
 const Schema = mongoose.Schema;
 
@@ -9,7 +10,8 @@ const PostSchema = new Schema({
     title : {type: String, required: true},
     body : {type: String, required: true},
     author : { type : Schema.Types.ObjectId, ref : "User" },
-    date :  { type: Date, default: Date.now }
+    date :  { type: Date, default: Date.now },
+    comment : { type : Schema.Types.ObjectId, ref : "Comment" }
 });
 
 //virtual message url
@@ -18,4 +20,6 @@ PostSchema.virtual("url").get(function(){
 })
 
 module.exports= mongoose.model("Post",PostSchema)
+
+
 
