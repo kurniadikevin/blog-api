@@ -5,7 +5,6 @@ const Post = require("../models/post");
 const async = require("async");
 
 
-
 //read posts
 router.get('/', (req, res,next) => {
   Post.find({}, "")
@@ -63,8 +62,25 @@ router.get('/:postId', function(req, res, next) {
 //update post
 router.put('/:postId', (req, res) => {
 
-  return res.send('update post'+ req.params.postId);
+    const posts = new Post({
+      title : req.body.title,
+      body : req.body.body,
+      author : req.body.author,
+      _id : req.params.postId,
+    
+  })
+  // Data from form is valid. Update the product.
+  Post.findByIdAndUpdate(req.params.postId, posts, {}, (err, post) => {
+    if (err) {
+      return next(err);
+    }
+    // Successful: redirect to new product record.
+    console.log('updated')
+    //res.redirect('http://localhost:3000');
+    res.status(200).end();
+  });
 });
+
 
 //delete post
 router.delete('/:postId/',(req,res)=>{
