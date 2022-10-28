@@ -32,13 +32,14 @@ router.post('/new', (req,res,next)=>{
   const posts = new Post({
     title : req.body.title,
    body : req.body.text,
+   author : req.body.author
    
  })
  posts.save(err => {
    if (err) { 
      return next(err);
    }
-   res.redirect("/");
+   res.redirect("http://localhost:3000/");
  });
 })
 

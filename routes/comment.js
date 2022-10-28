@@ -29,6 +29,7 @@ router.post('/:postId/comment/form', function(req, res, next) {
   const comments = new Comment({
     postId : req.params.postId,
    text_comment : req.body.text, 
+   author : req.body.user
  })
  comments.save(err => {
    if (err) { 

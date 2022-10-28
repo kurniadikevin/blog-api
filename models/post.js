@@ -9,7 +9,7 @@ const defaultAuthor = {
 const PostSchema = new Schema({
     title : {type: String, required: true},
     body : {type: String, required: true},
-    author : { type : Schema.Types.ObjectId, ref : "User" },
+    author : {type: String},
     date :  { type: Date, default: Date.now },
     comment : { type : Schema.Types.ObjectId, ref : "Comment" }
 });
