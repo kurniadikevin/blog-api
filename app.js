@@ -8,6 +8,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
+const bcrypt =require('bcryptjs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,17 +36,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
-app.use('/posts/', commentRouter);
-
-//user authentication and sign up
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
 
 //passport local strategy method
 passport.use(
@@ -75,14 +65,41 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+//user authentication and sign up
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
+app.use('/posts/', commentRouter);
+
+
 app.post(
-  "users/log-in",
+  "/users/log-in",
   passport.authenticate("local", {
-    successRedirect: "http://localhost:3000/",
-    failureRedirect: "http://localhost:3000/"
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "http://localhost:3000/create"
   })
 );
 
+app.get('/currentUser', function(req, res,next) {
+ //let data = ((res.locals.currentUser).username);
+  
+  let data = [];
+  data.push(req.user)
+  console.log(data)
+  res.json(data)
+  
+ });
+ 
 
 
 
