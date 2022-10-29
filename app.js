@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require('./models/user');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,7 +16,6 @@ var commentRouter = require('./routes/comment');
 
 
 var app = express();
-
 app.use(cors())
 
 //set up mongodb connection with mongoose
@@ -37,6 +40,51 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/posts/', commentRouter);
+
+//user authentication and sign up
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+//passport local strategy method
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // passwords match! log user in
+          return done(null, user)
+        }
+         else {
+          // passwords do not match!
+          return done(null, false, { message: "Incorrect password" })
+        }
+      })
+    });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+app.post(
+  "users/log-in",
+  passport.authenticate("local", {
+    successRedirect: "http://localhost:3000/",
+    failureRedirect: "http://localhost:3000/"
+  })
+);
+
+
+
 
 
 // catch 404 and forward to error handler

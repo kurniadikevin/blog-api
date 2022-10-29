@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  form(method="POST" action='')
+        div.form-group
+            label(for='fullname') Full Name
+            input#titleInput(type='text',placeholder='fullname', name='fullname',required='true')
+
+        div.form-group
+            label(for='username') Username
+            input#titleInput(type='text',placeholder='username', name='username',required='true')
+
+        div.form-group
+            label(for='password') Password
+            input#titleInput(type='password',placeholder='password', name='password',required='true')
+
+        div.button-cont
+            button.btn#submit-post(type='submit') Post
