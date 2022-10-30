@@ -35,7 +35,7 @@ router.post('/:postId/comment/form', function(req, res, next) {
    if (err) { 
      return next(err);
    }
-   res.redirect("/");
+   res.redirect(`http://localhost:3001/posts/${req.params.postId}`);
  });
 })
 

@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
     text_comment : {type: String, required: true},
-    author : { type: String, required: true},
+    author : { type: String},
     date :  { type: Date, default: Date.now },
-    postId : {type: String, required: true}
+    postId : {type: String, required: true},
 });
 
 //virtual message url

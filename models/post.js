@@ -11,7 +11,8 @@ const PostSchema = new Schema({
     body : {type: String, required: true},
     author : {type: String},
     date :  { type: Date, default: Date.now },
-    comment : { type : Schema.Types.ObjectId, ref : "Comment" }
+    comment : { type : Schema.Types.ObjectId, ref : "Comment" },
+    published : { type : String, default : false}
 });
 
 //virtual message url

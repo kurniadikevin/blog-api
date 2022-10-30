@@ -7,7 +7,7 @@ const async = require("async");
 
 //read posts
 router.get('/', (req, res,next) => {
-  Post.find({}, "")
+  Post.find({ published : true}, "")
   .sort({ date: -1 })
   .populate("comment")
   .exec(function (err, list_posts) {
@@ -19,6 +19,19 @@ router.get('/', (req, res,next) => {
   });
 });
 
+// read posts and unpublish one too
+router.get('/all', (req, res,next) => {
+  Post.find({ }, "")
+  .sort({ date: -1 })
+  .populate("comment")
+  .exec(function (err, list_posts) {
+    if (err) {
+      return next(err);
+    }
+    //Successful, so render
+    res.send(list_posts);
+  });
+});
 
 //create new post get
 router.get('/new', (req, res,next) => {
@@ -32,7 +45,8 @@ router.post('/new', (req,res,next)=>{
   const posts = new Post({
     title : req.body.title,
    body : req.body.text,
-   author : req.body.author
+   author : req.body.author,
+   published : req.body.published
    
  })
  posts.save(err => {
@@ -67,6 +81,7 @@ router.put('/:postId', (req, res) => {
       body : req.body.body,
       author : req.body.author,
       _id : req.params.postId,
+      published : req.body.published
     
   })
   // Data from form is valid. Update the product.
