@@ -4,7 +4,7 @@ const User = require('../models/user');
 const bcrypt =require('bcryptjs');
 
 //read all users
-router.get('/users', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.send('render all users')
  });
  

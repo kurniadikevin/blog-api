@@ -9,6 +9,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
 const bcrypt =require('bcryptjs');
+const Parse = require('parse');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -76,6 +78,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
@@ -86,23 +90,32 @@ app.post(
   "/users/log-in",
   passport.authenticate("local", {
     successRedirect: "http://localhost:3000",
-    failureRedirect: "http://localhost:3000/create"
-  })
-);
+    failureRedirect: "http://localhost:3000/create",
+    passReqToCallback: true
+  }), (req, res)=>{
+    // If you use "Content-Type": "application/json"
+    // req.isAuthenticated is true if authentication was success else it is false
+    res.json({auth: req.isAuthenticated()});
+});
 
-app.get('/currentUser', function(req, res,next) {
- //let data = ((res.locals.currentUser).username);
+
+app.get('/currentUser', function(req, res) {
+   //res.send(req.user)
+   Parse.User.enableUnsafeCurrentUser()
   
-  let data = [];
-  data.push(req.user)
-  console.log(data)
-  res.json(data)
+   User.find({_id: req.user._id}, "")
+   
+   .exec(function (err, list_user) {
+     if (err) {
+       return next(err);
+     }
+     //Successful, so render
+     res.json(list_user);
+     console.log(list_user);
+   });
+    
+  });
   
- });
- 
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
