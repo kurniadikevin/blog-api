@@ -35,7 +35,7 @@ router.post('/:postId/comment/form', function(req, res, next) {
    if (err) { 
      return next(err);
    }
-   res.redirect(`http://localhost:3001/posts/${req.params.postId}`);
+   res.redirect(`https://blackboardjournal-927wbbdjo-kurniadikevin.vercel.app/posts/${req.params.postId}`);
  });
 })
 
