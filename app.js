@@ -90,8 +90,8 @@ app.use('/posts/', commentRouter);
 app.post(
   "/users/log-in",
   passport.authenticate("local", {
-    successRedirect: "https://cmsblackboardjournal.vercel.app/",
-    failureRedirect: "https://cmsblackboardjournal.vercel.app/",
+    //successRedirect: "https://cmsblackboardjournal.vercel.app/",
+    //failureRedirect: "https://cmsblackboardjournal.vercel.app/",
     passReqToCallback: true
   }), (req, res)=>{
     // If you use "Content-Type": "application/json"
