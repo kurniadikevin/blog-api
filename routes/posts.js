@@ -53,7 +53,7 @@ router.post('/new', (req,res,next)=>{
    if (err) { 
      return next(err);
    }
-   res.redirect("http://localhost:3000/");
+   res.redirect("https://cmsblackboardjournal.vercel.app/");
  });
 })
 
@@ -91,10 +91,10 @@ router.put('/:postId', (req, res) => {
     }
     // Successful: redirect to new product record.
     console.log('updated')
-    //res.redirect('http://localhost:3000');
+   
     res
       .status(200)
-      //.redirect('http://localhost:3000')
+     
       .end();
   });
 });
