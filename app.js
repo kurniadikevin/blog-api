@@ -10,7 +10,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
 const bcrypt =require('bcryptjs');
 const Parse = require('parse');
-
+app.use(cors());
+app.options('*', cors());
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -19,7 +20,7 @@ var commentRouter = require('./routes/comment');
 
 
 var app = express();
-app.use(cors())
+
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
