@@ -10,7 +10,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
 const bcrypt =require('bcryptjs');
 const Parse = require('parse');
-app.use(cors());
+//app.use(cors());
 app.options('*', cors());
 
 var indexRouter = require('./routes/index');
