@@ -19,7 +19,9 @@ var commentRouter = require('./routes/comment');
 
 
 var app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://blackboardjournal.vercel.app/', 'https://cmsblackboardjournal-oy5v6p5c9-kurniadikevin.vercel.app/']
+}));
 
 
 //set up mongodb connection with mongoose
