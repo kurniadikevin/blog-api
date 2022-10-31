@@ -20,6 +20,7 @@ var commentRouter = require('./routes/comment');
 
 var app = express();
 app.use(cors());
+app.options('*', cors());
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
