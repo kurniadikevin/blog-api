@@ -11,7 +11,7 @@ Client
 [blog-client](https://github.com/kurniadikevin/blog-client) Repository
 
 API
-[blog-api](https://hidden-forest-44892.herokuapp.com/) Deployment
+[blog-api](https://blog-api-production-8114.up.railway.app) Deployment
 [blog-api](https://github.com/kurniadikevin/blog-api) Repository
 
 CMS
