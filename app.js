@@ -21,7 +21,13 @@ var commentRouter = require('./routes/comment');
 
 
 var app = express();
-app.use(cors());
+app.use(cors({
+
+  origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app'],
+
+  credentials : true
+}));
+
 app.use(compression());
 app.use(helmet());
 
