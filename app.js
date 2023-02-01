@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-const session = require('cookie-session');
+const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
@@ -21,14 +21,19 @@ var commentRouter = require('./routes/comment');
 
 
 var app = express();
+app.use(cors({
 
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
+  origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app'],
+  methods: [
+    'GET',
+    'POST','PUT','DELETE'
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
+  credentials : true
+}));
 
 //app.use(compression());
 //app.use(helmet());
