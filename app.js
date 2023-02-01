@@ -24,7 +24,8 @@ var app = express();
 app.use(cors({
 
   origin : 'https://cmsblackboardjournal.vercel.app',
-
+  
+  credentials : true
 }));
 
 //app.use(compression());
