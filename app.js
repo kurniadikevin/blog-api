@@ -106,7 +106,7 @@ app.post(
   }), (req, res)=>{
     // If you use "Content-Type": "application/json"
     // req.isAuthenticated is true if authentication was success else it is false
-    res.send({auth: req.isAuthenticated()});
+    res.json({auth: req.isAuthenticated()});
 });
 
 
