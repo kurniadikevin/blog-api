@@ -27,8 +27,8 @@ app.use(cors({
   credentials : true
 }));
 
-//app.use(compression());
-//app.use(helmet());
+app.use(compression());
+app.use(helmet());
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
