@@ -23,7 +23,7 @@ var commentRouter = require('./routes/comment');
 var app = express();
 app.use(cors({
 
-  origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app'],
+  origin : ['https://cmsblackboardjournal.vercel.app/','https://blackboardjournal.vercel.app'],
   methods: [
     'GET',
     'POST','PUT','DELETE'
