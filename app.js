@@ -24,7 +24,8 @@ var app = express();
 app.use(cors({
 
   origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app'],
-  credentials : true
+  credentials : true,
+  
 }));
 
 app.use(compression());
@@ -88,7 +89,6 @@ app.use(function(req, res, next) {
 });
 
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
@@ -104,7 +104,7 @@ app.post(
   }), (req, res)=>{
     // If you use "Content-Type": "application/json"
     // req.isAuthenticated is true if authentication was success else it is false
-    res.json({auth: req.isAuthenticated()});
+    res.send({auth: req.isAuthenticated()});
 });
 
 
