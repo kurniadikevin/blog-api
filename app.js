@@ -19,6 +19,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var commentRouter = require('./routes/comment');
+require('dotenv').config();
 
 
 var app = express();
@@ -34,8 +35,7 @@ app.use(helmet());
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
-const dev_db_url = 'mongodb+srv://kurniadikevin:passwordapi@cluster0.ysz4u9p.mongodb.net/?retryWrites=true&w=majority'
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
