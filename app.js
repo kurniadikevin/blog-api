@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 var logger = require('morgan');
 var cors = require('cors');
 const session = require("express-session");
@@ -34,8 +35,7 @@ app.use(helmet());
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
-const dev_db_url = 'mongodb+srv://kurniadikevin:passwordapi@cluster0.ysz4u9p.mongodb.net/?retryWrites=true&w=majority'
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -80,7 +80,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 //user authentication and sign up
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));

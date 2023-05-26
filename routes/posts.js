@@ -4,7 +4,6 @@ var router = express.Router();
 const Post = require("../models/post");
 const async = require("async");
 
-
 //read posts
 router.get('/', (req, res,next) => {
   Post.find({ published : true}, "")
@@ -53,6 +52,7 @@ router.post('/new', (req,res,next)=>{
    if (err) { 
      return next(err);
    }
+   res.status(200);
    res.redirect("https://cmsblackboardjournal.vercel.app/");
  });
 })
@@ -74,15 +74,13 @@ router.get('/:postId', function(req, res, next) {
 
 
 //update post
-router.put('/:postId', (req, res) => {
-
+router.put('/:postId', (req, res,next) => {
     const posts = new Post({
       title : req.body.title,
       body : req.body.body,
       author : req.body.author,
       _id : req.params.postId,
-      published : req.body.published
-    
+      published : req.body.published 
   })
   // Data from form is valid. Update the product.
   Post.findByIdAndUpdate(req.params.postId, posts, {}, (err, post) => {
@@ -91,23 +89,17 @@ router.put('/:postId', (req, res) => {
     }
     // Successful: redirect to new product record.
     console.log('updated')
-   
-    res
-      .status(200)
-     
-      .end();
+    res.send(`Post with id ${req.params.postId} updated`)
   });
 });
 
 
 //delete post
-router.delete('/:postId/',(req,res)=>{
-
+router.delete('/:postId/',(req,res,next)=>{
   async.parallel(
     {
       post(callback){
         Post.findById(req.params.postId).exec(callback);
-
       }
     },
     (err,results) => {
@@ -122,10 +114,9 @@ router.delete('/:postId/',(req,res)=>{
             return next(err);
           }
           // Sucessfully remove then redirect
-          console.log('succesfully deleted')
+          res.send(`Post with id ${req.params.postId} succesfully deleted` )
           res.status(200).end();
         })
-
     }
   )
 })
