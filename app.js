@@ -51,6 +51,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//make static file for images uploads
+app.use(express.static('image-uploads'))
+
 //passport local strategy method
 passport.use(
   new LocalStrategy((username, password, done) => {
