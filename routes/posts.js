@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//import { v4 as uuidv4 } from 'uuid';
 const Post = require("../models/post");
 const async = require("async");
 
@@ -58,7 +57,7 @@ router.post('/new', (req,res,next)=>{
      return next(err);
    }
    res.status(200);
-   res.redirect("https://cmsblackboardjournal.vercel.app/");
+   res.redirect("http://localhost:3000");
  });
 })
 
@@ -102,7 +101,7 @@ router.post('/new-multipart', upload.single('image'), (req, res, next) => {
   // untested on postman with body multipart/form-data issue
   const obj = new Post({
     title : req.body.title,
-    body : req.body.text,
+    body : req.body.body,
     author : req.body.author,
     published : req.body.published,
     imageContent :  req.file? [req.file.filename] : null, // req.file.filename for 1 image
@@ -114,10 +113,8 @@ router.post('/new-multipart', upload.single('image'), (req, res, next) => {
             //item.save();
             console.log('post with image sucessful');
             res.send(obj);
-        }
-        }
-        )
-      
+          }
+        })      
       }
 );
 
