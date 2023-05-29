@@ -30,8 +30,8 @@ app.use(cors({
   
 }));
 
-app.use(compression());
-app.use(helmet());
+/* app.use(compression());
+app.use(helmet()); */
 //make static file for images uploads
 app.use(express.static('image-uploads'))
 
