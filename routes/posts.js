@@ -10,7 +10,6 @@ var fs = require('fs');
 var path = require('path');
 
 
-
 //read posts
 router.get('/', (req, res,next) => {
   Post.find({ published : true}, "")
@@ -70,7 +69,7 @@ var storage = multer.diskStorage({
       cb(null, 'image-uploads')
   },
   filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   }
 });
 // limit file size too 500kb
@@ -106,7 +105,7 @@ router.post('/new-multipart', upload.single('image'), (req, res, next) => {
     body : req.body.text,
     author : req.body.author,
     published : req.body.published,
-    imageContent :  req.file? [req.file.filename] : null,
+    imageContent :  req.file? [req.file.filename] : null, // req.file.filename for 1 image
   })
         obj.save((err)=>{
          if(err){

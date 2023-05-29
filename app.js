@@ -14,7 +14,7 @@ const bcrypt =require('bcryptjs');
 const Parse = require('parse');
 const compression= require('compression');
 const helmet = require("helmet");
-
+var fs = require('fs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -32,6 +32,8 @@ app.use(cors({
 
 app.use(compression());
 app.use(helmet());
+//make static file for images uploads
+app.use(express.static('image-uploads'))
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
