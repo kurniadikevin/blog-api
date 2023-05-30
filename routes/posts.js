@@ -141,8 +141,9 @@ router.put('/:postId', (req, res,next) => {
       body : req.body.body,
       author : req.body.author,
       _id : req.params.postId,
-      published : req.body.published 
-  })
+      published : req.body.published,
+      imageContent : req.body.imageContent, 
+    })
   // Data from form is valid. Update the product.
   Post.findByIdAndUpdate(req.params.postId, posts, {}, (err, post) => {
     if (err) {
@@ -153,6 +154,30 @@ router.put('/:postId', (req, res,next) => {
     res.send(`Post with id ${req.params.postId} updated`)
   });
 });
+
+
+//update post with image
+router.put('/with-image/:postId',upload.single('image'), (req, res,next) => {
+  const posts = new Post({
+    title : req.body.title,
+    body : req.body.body,
+    author : req.body.author,
+    _id : req.params.postId,
+    published : req.body.published,
+    imageContent :  req.file? [req.file.filename] : null, // req.file.filename for 1 image
+  })
+// Data from form is valid. Update the product.
+Post.findByIdAndUpdate(req.params.postId, posts, {}, (err, post) => {
+  if (err) {
+    return next(err);
+  }
+  // Successful: redirect to new product record.
+  console.log('updated')
+  res.send(`Post with id ${req.params.postId} updated`)
+});
+});
+
+
 
 
 //delete post
