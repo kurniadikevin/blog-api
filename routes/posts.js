@@ -57,7 +57,7 @@ router.post('/new', (req,res,next)=>{
      return next(err);
    }
    res.status(200);
-   res.redirect("http://localhost:3000");
+   res.redirect("https://cmsblackboardjournal.vercel.app");
  });
 })
 
