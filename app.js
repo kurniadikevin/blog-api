@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 var logger = require('morgan');
 var cors = require('cors');
 const session = require("express-session");
@@ -13,6 +14,7 @@ const bcrypt =require('bcryptjs');
 const Parse = require('parse');
 const compression= require('compression');
 const helmet = require("helmet");
+var fs = require('fs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -29,8 +31,10 @@ app.use(cors({
   
 }));
 
-app.use(compression());
-app.use(helmet());
+/* app.use(compression());
+app.use(helmet()); */
+//make static file for images uploads
+app.use(express.static('image-uploads'))
 
 //set up mongodb connection with mongoose
 const mongoose = require("mongoose");
@@ -49,6 +53,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//make static file for images uploads
+app.use(express.static('image-uploads'))
 
 //passport local strategy method
 passport.use(
@@ -79,7 +86,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 //user authentication and sign up
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
