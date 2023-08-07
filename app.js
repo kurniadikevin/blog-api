@@ -26,7 +26,7 @@ require('dotenv').config();
 var app = express();
 app.use(cors({
 
-  origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app'],
+  origin : ['https://cmsblackboardjournal.vercel.app','https://blackboardjournal.vercel.app', process.env.LOCAL_CLIENTHOST],
   credentials : true,
   
 }));
